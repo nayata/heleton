@@ -7,7 +7,7 @@ Although [Heaps](https://heaps.io/) is a flexible and performant engine, it can 
 
 **Heleton** draws some inspiration from **deepnight**’s [gameBase](https://github.com/deepnight/gameBase), but is designed to be as simple and minimalistic as possible.
 
-## Heleton Manual
+## Manual
 Check out manual on [nayata.github.io/heleton](https://nayata.github.io/heleton/).
 
 ## Demo
