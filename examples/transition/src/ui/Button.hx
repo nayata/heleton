@@ -8,8 +8,8 @@ class Button extends h2d.Object {
 
 	public var text(get, set):String;
 
-	public var color:Int = 0xed145b;
-	public var textColor:Int = 0xffffff;
+	public var color:Int = 0xffffff;
+	public var textColor:Int = 0xe70060;
 
 	public var width:Float = 300;
 	public var height:Float = 68;

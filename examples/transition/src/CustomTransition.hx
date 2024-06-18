@@ -1,26 +1,20 @@
 /**
-	CustomTransition.
+	Custom Transition.
 **/
 class CustomTransition extends heaps.Transition {
+	var image:h2d.Bitmap;
 
 
 	public function new(a:App) {
 		super(a);
 
-		background = new h2d.Bitmap(hxd.Res.cover.toTile());
-		app.s2d.add(background, 1);
-		
-		background.y = -app.screen.height;
-		background.visible = false;
+		image = new h2d.Bitmap(hxd.Res.bg.toTile());
+		image.visible = false;
+
+		app.s2d.add(image, 1);
 	}
 
 
-	/**
-		Set a new scene for the App.
-
-		@param allocated Current scene.
-		@param scene New scene.
-	**/
 	override public function change(allocated:heaps.Scene, scene:heaps.Scene) {
 		if (allocated == null) {
 			app.s2d.add(scene, 0);
@@ -31,8 +25,11 @@ class CustomTransition extends heaps.Transition {
 		
 		working = true;
 
-		background.y = -app.screen.height;
-		background.visible = true;
+		app.sevents.removeScene(app.s2d);
+		allocated.onLeave();
+
+		image.x = -app.screen.width;
+		image.visible = true;
 
 		onReady = function() {
 			allocated.remove();
@@ -46,12 +43,12 @@ class CustomTransition extends heaps.Transition {
 			app.sevents.addScene(app.s2d);
 			scene.onReady();
 
-			background.visible = false;
+			image.visible = false;
 			working = false;
 		};
 
-		app.tween.add(background.y, 0, duration, "easeOut").end(onReady);
-		app.tween.add(background.y, -app.screen.height, duration, "easeOut", duration+interval).end(onEnd);
+		app.tween.add(image.x, 0, duration, "easeOut").end(onReady);
+		app.tween.add(image.x, app.screen.width, duration, "easeOut", duration+interval).end(onEnd);
 
 		return scene;
 	}
@@ -62,7 +59,18 @@ class CustomTransition extends heaps.Transition {
 
 
 	override public function onResize() {
-		background.width = hxd.Window.getInstance().width;
-		background.height = hxd.Window.getInstance().height;
+		image.width = hxd.Window.getInstance().width;
+		image.height = hxd.Window.getInstance().height;
+	}
+
+
+	override public function dispose() {
+		super.dispose();
+
+		image.remove();
+		image = null;
+
+		onReady = null;
+		onEnd = null;
 	}
 }
